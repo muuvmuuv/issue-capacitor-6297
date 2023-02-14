@@ -13,12 +13,38 @@ export class AppComponent implements OnInit {
   constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.http
-      .post('https://jsonplaceholder.typicode.com/posts', null, {
-        headers: {
-          something: 'special',
-        },
+    const data = new FormData();
+
+    data.append('kiss', 'kiss');
+
+    fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: {
+        anything: 'fetchial',
+      },
+    })
+      .then((response) => {
+        console.log(response);
+        return response.json().then(console.log);
       })
+      .catch(console.error);
+
+    this.http
+      .post(
+        'https://jsonplaceholder.typicode.com/posts',
+        {
+          json: 'test',
+        },
+        {
+          responseType: 'json',
+          headers: {
+            something: 'special',
+          },
+          params: {
+            version: 2,
+          },
+        }
+      )
       .pipe(
         catchError((error) => {
           console.error(error);
